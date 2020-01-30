@@ -8,6 +8,7 @@ let pagesForm = document.getElementById("pages");
 let readForm = document.getElementById("read");
 let submitBtn = document.getElementById("submit");
 
+
 let myLibrary = [];
 
 modalBtn.onclick = function() {
@@ -56,6 +57,8 @@ function render(arr) {
             changeBooktoRead(`${index}`);
         })
     })
+
+    localStorage.setItem("myLibrary", JSON.stringify(arr));
 
 };
 
@@ -132,8 +135,13 @@ function addBookToLibrary(newBook) {
     }
 }
 
+let loadedLibraryFromStorage = localStorage.getItem("myLibrary")
+if (loadedLibraryFromStorage && loadedLibraryFromStorage.length) {
+    myLibrary = JSON.parse(loadedLibraryFromStorage)
+} else {
+    const Book1 = new Book("Bible", "God", 899, "read");
+    const h3 = document.getElementsByTagName("h3");
+    addBookToLibrary(Book1);
+}
 
-const Book1 = new Book("Bible", "God", 899, "read");
-const h3 = document.getElementsByTagName("h3");
-addBookToLibrary(Book1);
 render(myLibrary)
